@@ -40,13 +40,14 @@ public class DataLoader {
         
     }
     
-    class func loadArrayOf<T:FloatingPoint>(_ type:T.Type, url : URL, sampleRate:Double = 44100) -> [T]? {
+    class func loadAudioSamplesArrayOf<T:FloatingPoint>(_ type:T.Type, atUrl url : URL, sampleRate:Double = 44100, channels:Int = 1 , interleaved:Bool = true) -> [T]? {
         
         do {
             let data = try Data(contentsOf: url)
             
             if let file = try? AVAudioFile(forReading: url){
-                let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Double(sampleRate), channels: 1, interleaved: true)
+                
+                let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: Double(sampleRate), channels: AVAudioChannelCount(channels), interleaved: interleaved)
                 
                 if let buffer = AVAudioPCMBuffer(pcmFormat: format!, frameCapacity: AVAudioFrameCount(data.count)){
                     if ((try? file.read(into: buffer)) != nil) {

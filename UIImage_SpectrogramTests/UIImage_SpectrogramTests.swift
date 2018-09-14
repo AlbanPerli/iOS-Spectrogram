@@ -26,8 +26,8 @@ class UIImage_SpectrogramTests: XCTestCase {
         let testBundle = Bundle(for: type(of: self))
         if let filePath = testBundle.path(forResource: "bonjour", ofType: "wav") {
             let url = URL(fileURLWithPath: filePath)
-            let rawAudioDouble = DataLoader.loadArrayOf(Double.self, url: url, sampleRate: 44100)
-            let rawAudioFloat = DataLoader.loadArrayOf(Float.self, url: url, sampleRate: 44100)
+            let rawAudioDouble = DataLoader.loadAudioSamplesArrayOf(Double.self, atUrl: url, sampleRate: 44100)
+            let rawAudioFloat = DataLoader.loadAudioSamplesArrayOf(Float.self, atUrl: url, sampleRate: 44100)
             
             XCTAssert(rawAudioFloat?.count == rawAudioDouble?.count)
             
@@ -58,7 +58,7 @@ class UIImage_SpectrogramTests: XCTestCase {
         let testBundle = Bundle(for: type(of: self))
         if let filePath = testBundle.path(forResource: "bonjour", ofType: "wav") {
             let url = URL(fileURLWithPath: filePath)
-            let rawAudio = DataLoader.loadArrayOf(Float.self, url:url)
+            let rawAudio = DataLoader.loadAudioSamplesArrayOf(Float.self, atUrl:url)
             XCTAssertNotNil(rawAudio)
             let signalAudio = rawAudio!.chunks(2048)
             let fftValues = signalAudio.map{ fft($0) }
@@ -152,7 +152,7 @@ class UIImage_SpectrogramTests: XCTestCase {
         let testBundle = Bundle(for: type(of: self))
         if let filePath = testBundle.path(forResource: "bonjour", ofType: "wav") {
             let url = URL(fileURLWithPath: filePath)
-            var rawAudio = DataLoader.loadArrayOf(Float.self, url: url, sampleRate: 44100)
+            var rawAudio = DataLoader.loadAudioSamplesArrayOf(Float.self, atUrl: url, sampleRate: 44100)
             rawAudio = Array(rawAudio![0..<2097152])
             rawAudio = applyWindow(rawAudio!)
             let v = fft(rawAudio!).real
