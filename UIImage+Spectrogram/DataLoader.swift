@@ -21,12 +21,12 @@ public class DataLoader {
         }
     }
     
-    class func documentsDirectory() -> URL {
+    public class func documentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
     
-    class func saveArray<T:FloatingPoint>(_ arrayToSave:[T], to fileName:String, with separator:String = ";") {
+    public class func saveArray<T:FloatingPoint>(_ arrayToSave:[T], to fileName:String, with separator:String = ";") {
         
         let stringToSave = arrayToSave.map{ String(describing: $0) }.joined(separator: separator)
         
@@ -40,7 +40,7 @@ public class DataLoader {
         
     }
     
-    class func loadAudioSamplesArrayOf<T:FloatingPoint>(_ type:T.Type, atUrl url : URL, sampleRate:Double = 44100, channels:Int = 1 , interleaved:Bool = true) -> [T]? {
+    public class func loadAudioSamplesArrayOf<T:FloatingPoint>(_ type:T.Type, atUrl url : URL, sampleRate:Double = 44100, channels:Int = 1 , interleaved:Bool = true) -> [T]? {
         
         do {
             
